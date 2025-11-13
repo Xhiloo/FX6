@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="system">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KriptoKu • Generate RSA Keys</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+  <script defer src="js/utils.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <span class="logo">₭</span>
+        <a href="index.html" class="brand-name">KriptoKu</a>
+      </div>
+      <div class="header-actions">
+        <a class="tab" href="index.html">Menu</a>
+        <a class="tab active" href="rsa_keys.html">Generate Key</a>
+        <a class="tab" href="rsa.html">RSA</a>
+        <a class="tab" href="caesar.html">Caesar</a>
+      </div>
+      <div class="theme-toggle">
+        <button id="theme-light" class="chip">☀️</button>
+        <button id="theme-system" class="chip">⚙️</button>
+        <button id="theme-dark" class="chip">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="container page-grid">
+      <!-- Edukasi -->
+      <section class="card reveal algo-panel">
+        <div class="card-head">
+          <div>
+            <h1>Generate Kunci RSA</h1>
+            <p class="lead">
+              Di sini kamu dapat menghitung pasangan <strong>public key</strong> dan
+              <strong>private key</strong> RSA berdasarkan dua bilangan prima p dan q.
+            </p>
+          </div>
+          <div class="algo-tags">
+            <span class="chip-soft">Langkah awal RSA</span>
+            <span class="chip-soft">Pembangkitan kunci</span>
+          </div>
+        </div>
+        <div class="card-body algo-body">
+          <div class="algo-section">
+            <h3>Langkah matematis</h3>
+            <ul class="edu-list">
+              <li>Pilih bilangan prima <strong>p</strong> dan <strong>q</strong>.</li>
+              <li>Hitung <strong>n = p × q</strong>.</li>
+              <li>Hitung <strong>φ(n) = (p-1)(q-1)</strong>.</li>
+              <li>Pilih <strong>e</strong> relatif prima terhadap φ(n).</li>
+              <li>Cari <strong>d</strong> sehingga <code>e·d ≡ 1 (mod φ(n))</code>.</li>
+            </ul>
+          </div>
+          <div class="algo-section">
+            <h3>Output yang dihasilkan</h3>
+            <ul class="edu-list">
+              <li><strong>Public key</strong>: (n, e)</li>
+              <li><strong>Private key</strong>: (n, d)</li>
+              <li>Kamu bisa ekspor keduanya sebagai file JSON untuk digunakan di halaman RSA Encrypt/Decrypt.</li>
+            </ul>
+          </div>
+          <div class="algo-section">
+            <h3>Catatan demo</h3>
+            <p class="field-hint">
+              Nilai p dan q di sini hanya contoh kecil, sehingga <strong>tidak aman</strong> untuk dipakai di dunia nyata.
+              Di implementasi real, p dan q harus sangat besar.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Workspace -->
+      <section class="card reveal workspace">
+        <div class="card-head workspace-head">
+          <div>
+            <h2>Hitung Parameter RSA</h2>
+            <p class="muted">
+              Masukkan dua bilangan prima, lalu sistem akan menghitung n, φ(n), e dan d.
+            </p>
+          </div>
+          <div class="workspace-meta">
+            <div class="meta-item">
+              <span class="meta-label">Output</span>
+              <span class="meta-value">Public & Private key</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body workspace-body">
+          <div class="field-row">
+            <div class="field-group">
+              <label for="p">p (bilangan prima)</label>
+              <input id="p" class="input" type="number" value="17" />
+            </div>
+            <div class="field-group">
+              <label for="q">q (bilangan prima)</label>
+              <input id="q" class="input" type="number" value="11" />
+            </div>
+          </div>
+
+          <div class="actions">
+            <button id="gen" class="btn primary">Hitung</button>
+            <button id="exportPub" class="btn ghost small">Export Public Key</button>
+            <button id="exportPriv" class="btn ghost small">Export Private Key</button>
+          </div>
+
+          <div class="field-group">
+            <label>Ringkasan nilai</label>
+            <div class="summary-box">
+              <div>n: <strong id="nVal">-</strong></div>
+              <div>φ(n): <strong id="phiVal">-</strong></div>
+              <div>e: <strong id="eVal">-</strong></div>
+              <div>d: <strong id="dVal">-</strong></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section class="container card reveal steps-card">
+      <div class="card-head">
+        <div>
+          <h3>Langkah Perhitungan</h3>
+          <p class="muted">
+            Detail proses mulai dari pemilihan p dan q hingga diperolehnya nilai e dan d.
+          </p>
+        </div>
+        <div class="progressbar"><span id="prog"></span></div>
+      </div>
+      <div class="card-body steps-wrap">
+        <div id="steps" class="steps"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">© <span id="year"></span> KriptoKu</footer>
+  <script>document.getElementById('year').textContent=new Date().getFullYear()</script>
+  <script defer src="js/theme.js"></script>
+  <script defer src="js/helpers.js"></script>
+  <script defer src="js/rsa_keys.js"></script>
+</body>
+</html>
